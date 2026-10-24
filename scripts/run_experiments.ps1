@@ -4,7 +4,7 @@
 $ErrorActionPreference = "Stop"
 
 $runs = @(
-    @("exp1_baseline_cnn",     "--model baseline --lr 1e-3"),                      # architecture: own CNN
+    @("exp1_baseline_cnn",     "--model baseline --lr 1e-3 --epochs 40 --patience 10"),  # architecture: own CNN (from scratch needs longer)
     @("exp2_mnv2_reference",   "--model transfer --backbone mobilenetv2 --lr 1e-3"),  # reference
     @("exp3_mnv2_lr1e-4",      "--model transfer --backbone mobilenetv2 --lr 1e-4"),  # learning rate
     @("exp4_mnv2_noaug",       "--model transfer --backbone mobilenetv2 --lr 1e-3 --no-augment"),  # augmentation

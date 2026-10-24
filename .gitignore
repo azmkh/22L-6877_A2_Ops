@@ -20,8 +20,9 @@ outputs/
 mlruns/
 mlartifacts/
 
-# local databases and build folders
+# local databases, logs and build folders
 *.db
+*.log
 instance/
 build/
 
