@@ -1,0 +1,49 @@
+# Task 6.3 - one command runs the whole system:  docker compose up -d --build
+# Secrets come from the untracked .env file (copy .env.example to .env and fill it in).
+name: visionguard
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-visionguard}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    # No "ports:" on purpose. The database is reachable only as db:5432 from other services on
+    # this project's internal network, never from the host or the internet.
+
+  web:
+    build: .
+    image: visionguard-web:latest
+    environment:
+      # "db" resolves through Compose's internal DNS to the database container.
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-visionguard}
+      PROJECT_NAME: ${PROJECT_NAME:-ROLLNO_A2_Ops}
+      MODEL_PATH: /models/champion.keras
+      THRESHOLD: ${THRESHOLD:-}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-5}
+      INFERENCE_MODE: ${INFERENCE_MODE:-local}
+      API_URL: ${API_URL:-}
+      API_KEY: ${API_KEY:-}
+      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
+    volumes:
+      # The champion model is MOUNTED read-only: a new champion is deployed by running
+      # `python -m visionguard.registry export` and restarting, without rebuilding the image.
+      - ./models:/models:ro
+    ports:
+      - "127.0.0.1:${WEB_PORT:-5000}:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

@@ -1,0 +1,16 @@
+# Full development / training environment (Python 3.11 or 3.12).
+# TensorFlow and Keras are pinned to the SAME versions as the serving images, so a model saved
+# here loads identically in Docker and in the cloud.
+tensorflow==2.19.0
+keras==3.10.0
+keras-tuner==1.4.7
+# MLflow 2.x: DagsHub's hosted MLflow server is compatible with the 2.x client API.
+mlflow==2.22.0
+dvc[s3]>=3.50
+numpy>=1.26,<2.2
+pandas>=2.2
+scikit-learn>=1.5
+matplotlib>=3.9
+pillow>=10.4
+pyyaml>=6.0
+-r requirements-dev.txt

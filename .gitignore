@@ -1,0 +1,29 @@
+# secrets
+.env
+.dvc/config.local
+
+# environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# data and models: versioned with DVC, not Git (data/raw is ignored by DVC's own data/.gitignore)
+data/clean/
+models/*.keras
+models/*.json
+
+# experiment outputs
+outputs/
+mlruns/
+mlartifacts/
+
+# local databases and build folders
+*.db
+instance/
+build/
+
+# build metadata from `pip install -e .`
+*.egg-info/

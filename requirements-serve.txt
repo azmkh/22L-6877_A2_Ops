@@ -1,0 +1,12 @@
+# Web app container. tensorflow-cpu: no CUDA code paths, smaller wheel; the server has no GPU and
+# one image at a time runs in well under a second on CPU.
+tensorflow-cpu==2.19.0
+keras==3.10.0
+numpy>=1.26,<2.2
+pillow>=10.4
+flask>=3.0,<4
+gunicorn>=22.0
+sqlalchemy>=2.0,<3
+psycopg2-binary>=2.9
+requests>=2.32
+python-dotenv>=1.0

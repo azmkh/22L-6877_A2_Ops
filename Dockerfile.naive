@@ -1,0 +1,15 @@
+# Task 6.4 "before" image - deliberately unoptimised, for the size comparison only.
+#   docker build -f Dockerfile.naive -t visionguard-web:naive .
+# Differences from ./Dockerfile: full python:3.11 base (Debian with compilers, ~1 GB) instead of
+# -slim, and pip keeps its download cache inside the image layer.
+FROM python:3.11
+
+WORKDIR /app
+COPY requirements-serve.txt .
+RUN pip install -r requirements-serve.txt
+COPY src/visionguard/__init__.py src/visionguard/preprocess.py src/visionguard/serving.py \
+     src/visionguard/validation.py src/visionguard/web.py ./visionguard/
+COPY app ./app
+COPY wsgi.py .
+EXPOSE 5000
+CMD ["gunicorn", "--workers", "1", "--threads", "4", "--timeout", "120", "--bind", "0.0.0.0:5000", "wsgi:app"]

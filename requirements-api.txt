@@ -1,0 +1,7 @@
+# Cloud model API container (no database driver needed here).
+tensorflow-cpu==2.19.0
+keras==3.10.0
+numpy>=1.26,<2.2
+pillow>=10.4
+flask>=3.0,<4
+gunicorn>=22.0
