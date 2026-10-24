@@ -126,7 +126,9 @@ def main(argv=None):
             print(f"Stage 2: unfroze {len(unfrozen)} backbone layers, lr={args.fine_tune_lr:g}")
             models.compile_model(model, args.fine_tune_lr)  # recompile so trainable flags apply
             boundaries.append(done)
-            fit_stage("stage2_fine_tune_last_block", args.fine_tune_epochs, done)
+            stage2 = "stage2_fine_tune_last_block" if args.unfreeze_layers is None \
+                else f"stage2_fine_tune_last_{args.unfreeze_layers}_layers"
+            fit_stage(stage2, args.fine_tune_epochs, done)
         if args.tracking == "autolog":
             mlflow.tensorflow.autolog(disable=True)
 
