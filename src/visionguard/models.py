@@ -19,15 +19,19 @@ BACKBONES = {
 
 
 def build_baseline_cnn(img_size: int, dropout: float = 0.3) -> keras.Model:
+    # BatchNorm momentum 0.9 (Keras default 0.99): with ~20 batches per epoch the default moving
+    # statistics lag far behind the weights, so in inference mode (validation) the model collapsed
+    # to predicting one class for the first epochs and early stopping ended the run.
+    bn_momentum = 0.9
     inputs = keras.Input((img_size, img_size, 3), name="image")
     x = layers.Rescaling(1 / 255.0, name="rescale_0_1")(inputs)
     for i, filters in enumerate([32, 64, 128], start=1):
         x = layers.Conv2D(filters, 3, padding="same", use_bias=False, name=f"conv{i}")(x)
-        x = layers.BatchNormalization(name=f"bn{i}")(x)
+        x = layers.BatchNormalization(momentum=bn_momentum, name=f"bn{i}")(x)
         x = layers.ReLU(name=f"relu{i}")(x)
         x = layers.MaxPooling2D(2, name=f"pool{i}")(x)
     x = layers.Conv2D(256, 3, padding="same", use_bias=False, name="last_conv")(x)
-    x = layers.BatchNormalization(name="bn_last")(x)
+    x = layers.BatchNormalization(momentum=bn_momentum, name="bn_last")(x)
     x = layers.ReLU(name="relu_last")(x)
     x = layers.GlobalAveragePooling2D(name="gap")(x)
     x = layers.Dropout(dropout, name="dropout")(x)
