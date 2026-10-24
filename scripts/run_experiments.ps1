@@ -11,7 +11,9 @@ $runs = @(
     @("exp5_mnv2_frozen_only", "--model transfer --backbone mobilenetv2 --lr 1e-3 --unfreeze-layers 0"),  # frozen layers
     @("exp6_mnv2_160px",       "--model transfer --backbone mobilenetv2 --lr 1e-3 --img-size 160"),  # image size
     @("exp7_effnetb0",         "--model transfer --backbone efficientnetb0 --lr 1e-3"),  # backbone
-    @("exp8_mnv2_autolog",     "--model transfer --backbone mobilenetv2 --lr 1e-3 --tracking autolog")  # Task 3.3 autolog
+    @("exp8_mnv2_autolog",     "--model transfer --backbone mobilenetv2 --lr 1e-3 --tracking autolog"),  # Task 3.3 autolog
+    # Keras Tuner's best setting (reports/tuner): 40 unfrozen layers, lr 4.4e-5, dropout 0.4
+    @("exp9_mnv2_tuned",       "--model transfer --backbone mobilenetv2 --lr 1e-3 --unfreeze-layers 40 --fine-tune-lr 4.4e-5 --dropout 0.4")
 )
 
 foreach ($r in $runs) {
