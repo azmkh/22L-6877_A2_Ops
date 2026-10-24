@@ -1,0 +1,12 @@
+# Allow-list: send only what the images need to the Docker build context.
+# Keeps the context small (no dataset, venv, mlruns) and secrets (.env) out of every image.
+*
+!requirements-serve.txt
+!requirements-api.txt
+!src/visionguard/*.py
+!app/
+!api/
+!wsgi.py
+!models/champion.keras
+!models/champion.json
+**/__pycache__

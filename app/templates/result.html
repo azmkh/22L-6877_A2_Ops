@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Result #{{ p.id }}{% endblock %}
+{% block content %}
+<section class="card result {{ p.label }}">
+  <p class="eyebrow">Result #{{ p.id }} · {{ p.filename }}</p>
+  <h1 class="verdict">{{ "AI-generated" if p.label == "ai" else "Real" }}</h1>
+  <div class="meter" aria-label="confidence">
+    <div class="meter-fill" style="width: {{ '%.1f' % (p.confidence * 100) }}%"></div>
+  </div>
+  <p class="confidence">Confidence <strong>{{ '%.1f' % (p.confidence * 100) }}%</strong>
+    <span class="hint">· 50% = on the decision threshold, 100% = as far from it as possible</span></p>
+
+  <dl class="details">
+    <dt>P(AI-generated)</dt><dd>{{ '%.4f' % p.probability_ai }}</dd>
+    <dt>Decision threshold</dt><dd>{{ '%.3f' % p.threshold }} (AI if P ≥ threshold)</dd>
+    <dt>Model</dt><dd>{{ p.model_name }} · version {{ p.model_version }}</dd>
+    <dt>Inference</dt><dd>{{ p.inference_source }} · {{ '%.0f' % p.latency_ms }} ms</dd>
+    <dt>Time (UTC)</dt><dd>{{ p.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
+  </dl>
+
+  <div class="caveat">
+    <strong>Please read:</strong> this is a statistical estimate, not proof. The model was trained on a small
+    public dataset and makes mistakes, especially on heavily compressed, resized, edited, painted or
+    stylised images, and on generators it has never seen. Confidence is the model's own score, not a
+    calibrated probability of being right. Do not use this result alone to accuse anyone of faking an image.
+  </div>
+  <p><a class="btn" href="{{ url_for('main.index') }}">Analyse another</a>
+     <a class="btn ghost" href="{{ url_for('main.history') }}">View history</a></p>
+</section>
+{% endblock %}

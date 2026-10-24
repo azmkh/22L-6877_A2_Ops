@@ -1,0 +1,9 @@
+# Web app, tests and linting - everything CI needs. No TensorFlow: the tests use a fake predictor.
+flask>=3.0,<4
+sqlalchemy>=2.0,<3
+pillow>=10.4
+numpy>=1.26
+requests>=2.32
+python-dotenv>=1.0
+pytest>=8.0
+ruff>=0.6

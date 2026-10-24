@@ -1,0 +1,72 @@
+{
+  "info": {
+    "name": "VisionGuard API",
+    "description": "Task 7 - test the cloud model API. Set the collection variables baseUrl and apiKey, then pick an image file in the form-data 'image' field of each predict request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://<hf-user>-rollno-a2-ops.hf.space" },
+    { "key": "apiKey", "value": "<API_KEY>" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('status 200', () => pm.response.to.have.status(200));",
+        "pm.test('model loaded', () => pm.expect(pm.response.json().model_name).to.be.a('string'));"
+      ] } }]
+    },
+    {
+      "name": "Predict - real image",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file", "src": "" }] },
+        "url": "{{baseUrl}}/predict"
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('status 200', () => pm.response.to.have.status(200));",
+        "const j = pm.response.json();",
+        "pm.test('has label and confidence', () => { pm.expect(['ai','real']).to.include(j.label); pm.expect(j.confidence).to.be.within(0,1); });",
+        "console.log(j);"
+      ] } }]
+    },
+    {
+      "name": "Predict - AI image",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file", "src": "" }] },
+        "url": "{{baseUrl}}/predict"
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('status 200', () => pm.response.to.have.status(200));",
+        "console.log(pm.response.json());"
+      ] } }]
+    },
+    {
+      "name": "Predict - missing API key (expect 401)",
+      "request": {
+        "method": "POST",
+        "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file", "src": "" }] },
+        "url": "{{baseUrl}}/predict"
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('status 401', () => pm.response.to.have.status(401));"
+      ] } }]
+    },
+    {
+      "name": "Predict - wrong file type (expect 415)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "body": { "mode": "formdata", "formdata": [{ "key": "image", "type": "file", "src": "", "description": "pick a .txt or .pdf file" }] },
+        "url": "{{baseUrl}}/predict"
+      },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('status 415', () => pm.response.to.have.status(415));"
+      ] } }]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<section class="card wide">
+  <h1>Prediction history</h1>
+  <p class="muted">Every answered request, newest first (latest 200). Stored in the database, not in the browser.</p>
+  <div class="filters">
+    <a href="{{ url_for('main.history') }}" class="chip {{ 'on' if not label }}">All ({{ counts.values() | sum }})</a>
+    <a href="{{ url_for('main.history', label='ai') }}" class="chip {{ 'on' if label == 'ai' }}">AI-generated ({{ counts.get('ai', 0) }})</a>
+    <a href="{{ url_for('main.history', label='real') }}" class="chip {{ 'on' if label == 'real' }}">Real ({{ counts.get('real', 0) }})</a>
+  </div>
+  {% if rows %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>When (UTC)</th><th>File</th><th>Decision</th><th>Confidence</th>
+            <th>P(AI)</th><th>Threshold</th><th>Model</th><th>Version</th><th>Inference</th><th>ms</th></tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td><a href="{{ url_for('main.result', prediction_id=r.id) }}">{{ r.id }}</a></td>
+          <td class="nowrap">{{ r.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td class="file" title="sha256 {{ r.file_sha256 }}">{{ r.filename }}</td>
+          <td><span class="tag {{ r.label }}">{{ "AI-generated" if r.label == "ai" else "Real" }}</span></td>
+          <td>{{ '%.1f' % (r.confidence * 100) }}%</td>
+          <td>{{ '%.3f' % r.probability_ai }}</td>
+          <td>{{ '%.3f' % r.threshold }}</td>
+          <td>{{ r.model_name }}</td>
+          <td>{{ r.model_version }}</td>
+          <td>{{ r.inference_source }}</td>
+          <td>{{ '%.0f' % r.latency_ms }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty">No predictions yet. <a href="{{ url_for('main.index') }}">Upload an image</a>.</p>
+  {% endif %}
+</section>
+{% endblock %}
