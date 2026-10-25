@@ -1,2 +1,6 @@
 [core]
     analytics = false
+    remote = origin
+['remote "origin"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/azmkh/22L-6877_A2_Ops.s3

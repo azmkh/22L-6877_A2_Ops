@@ -7,6 +7,7 @@ DagsHub (3.2): put MLFLOW_TRACKING_URI / _USERNAME / _PASSWORD in .env, then add
 """
 import argparse
 import os
+import sys
 from pathlib import Path
 
 import keras
@@ -19,6 +20,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
+# MLflow prints an emoji when a remote run ends; Windows' cp1252 can't encode it when output is piped.
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
 def main():
