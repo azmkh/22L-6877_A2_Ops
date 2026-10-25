@@ -3,7 +3,7 @@
 Commands are for **PowerShell on Windows**, run from the repository root. Every screenshot must show
 your username / terminal prompt, the date or time, and the project name (assignment 11.1).
 
-> Replace `ROLLNO_A2_Ops` with `<YourRollNumber>_A2_Ops` in `.env` (`PROJECT_NAME`) and use that
+> Roll number **22L-6877**: the project name is `22L-6877_A2_Ops` (`PROJECT_NAME` in `.env`). Use that
 > same name for the GitHub repo, DagsHub repo, MLflow experiment, Hugging Face Space and report.
 
 | Where the code is | What it does |
@@ -24,14 +24,14 @@ your username / terminal prompt, the date or time, and the project name (assignm
    `winget install Python.Python.3.11`, or install [uv](https://docs.astral.sh/uv/) and let it fetch Python.
 2. Install **Git**, **Docker Desktop** (with WSL2), **Postman**, and create accounts on GitHub, DagsHub,
    Kaggle and Hugging Face.
-3. Create the GitHub repo `ROLLNO_A2_Ops` and push this folder:
+3. Create the GitHub repo `22L-6877_A2_Ops` and push this folder:
    ```powershell
    git init -b main
    git add . ; git commit -m "VisionGuard skeleton"
-   git remote add origin https://github.com/<you>/ROLLNO_A2_Ops.git
+   git remote add origin https://github.com/<you>/22L-6877_A2_Ops.git
    git push -u origin main
    ```
-4. On DagsHub: **Create → New repository → Connect a repository → GitHub** and pick `ROLLNO_A2_Ops`.
+4. On DagsHub: **Create → New repository → Connect a repository → GitHub** and pick `22L-6877_A2_Ops`.
    This gives you MLflow tracking, DVC storage and the code view in one place (Tasks 1.4 and 3.2).
 5. `Copy-Item .env.example .env` and fill it in. `.env` is git-ignored and docker-ignored.
 
@@ -70,8 +70,8 @@ shortcut the model could learn instead of real "AI-ness").
 
 ### 1.4 DVC
 **Toy part** (new empty folder, local-folder remote): `.\labs\dvc_toy.ps1` and screenshot each step.
-To also use DagsHub for the toy, create an empty DagsHub repo `ROLLNO_A2_Ops_dvc_toy`, push the toy
-git repo to it (`git remote add origin https://dagshub.com/<you>/ROLLNO_A2_Ops_dvc_toy.git; git push -u origin main`),
+To also use DagsHub for the toy, create an empty DagsHub repo `22L-6877_A2_Ops_dvc_toy`, push the toy
+git repo to it (`git remote add origin https://dagshub.com/<you>/22L-6877_A2_Ops_dvc_toy.git; git push -u origin main`),
 and add its storage as a second remote (same commands as below).
 
 **Apply to the dataset** (in this repo):
@@ -81,7 +81,7 @@ dvc add data\raw
 git add data\raw.dvc data\.gitignore .dvc .dvcignore
 git commit -m "Track dataset with DVC"
 dvc remote add -d origin s3://dvc
-dvc remote modify origin endpointurl https://dagshub.com/<you>/ROLLNO_A2_Ops.s3
+dvc remote modify origin endpointurl https://dagshub.com/<you>/22L-6877_A2_Ops.s3
 dvc remote modify origin --local access_key_id <your-dagshub-token>
 dvc remote modify origin --local secret_access_key <your-dagshub-token>
 git add .dvc\config ; git commit -m "DagsHub DVC remote" ; git push
@@ -159,7 +159,7 @@ Select both runs → **Compare**. Screenshot both run pages and the comparison v
 
 ### 3.2 DagsHub
 On DagsHub: repo → **Remote → Experiments** shows the tracking URL
-(`https://dagshub.com/<you>/ROLLNO_A2_Ops.mlflow`). Create a token under **User settings → Tokens**.
+(`https://dagshub.com/<you>/22L-6877_A2_Ops.mlflow`). Create a token under **User settings → Tokens**.
 Put both in `.env` (`MLFLOW_TRACKING_URI`, `MLFLOW_TRACKING_USERNAME`, `MLFLOW_TRACKING_PASSWORD`).
 ```powershell
 python labs\mlflow_toy.py --lr 0.001 --remote
@@ -266,9 +266,9 @@ README.md (replace `<you>`). Secrets live in **Settings → Secrets and variable
 python -m visionguard.registry export
 .\deploy\prepare_hf_space.ps1 -HfUser <your-hf-username>
 ```
-Follow the printed steps (create a Docker Space named `ROLLNO_A2_Ops`, add secret `API_KEY`, push with
+Follow the printed steps (create a Docker Space named `22L-6877_A2_Ops`, add secret `API_KEY`, push with
 git-lfs). Screenshot each step and the build log. The API URL looks like
-`https://<user>-rollno-a2-ops.hf.space`.
+`https://<user>-22l-6877-a2-ops.hf.space`.
 
 Research notes for the report: free CPU Space = 2 vCPU / 16 GB, sleeps after inactivity (first call is
 slow), public by default (hence the API key), no persistent disk (the database stays local).
@@ -285,8 +285,8 @@ History table show `Inference: remote:<space host>`. Screenshot results + Histor
 showing the same requests.
 
 ## Report checklist (11.1 / 11.2)
-- Front matter: name, roll number, GitHub / DagsHub / API URLs, graded commit hash (`git rev-parse HEAD`),
+- Front matter: name, roll number (22L-6877), GitHub / DagsHub / API URLs, graded commit hash (`git rev-parse HEAD`),
   **disclosure of AI assistants used and for what** (this code was written with help from Claude).
 - One chapter per task; under each sub-task ID: what, why, how (in your own words), what went wrong.
 - Every screenshot captioned, referenced in the text, with username/time/project name visible.
-- File name `<RollNumber>_VisionGuard.pdf`.
+- File name `22L-6877_VisionGuard.pdf`.

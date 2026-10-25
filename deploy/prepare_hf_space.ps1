@@ -4,7 +4,7 @@
 #   3. follow the printed git commands
 param(
     [Parameter(Mandatory = $true)][string]$HfUser,
-    [string]$SpaceName = $(if ($env:PROJECT_NAME) { $env:PROJECT_NAME } else { "ROLLNO_A2_Ops" })
+    [string]$SpaceName = $(if ($env:PROJECT_NAME) { $env:PROJECT_NAME } else { "22L-6877_A2_Ops" })
 )
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot

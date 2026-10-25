@@ -30,7 +30,7 @@ def main():
     args = parser.parse_args()
 
     load_dotenv(ROOT / ".env")
-    project = os.getenv("PROJECT_NAME", "ROLLNO_A2_Ops")
+    project = os.getenv("PROJECT_NAME", "22L-6877_A2_Ops")
     if args.remote:
         if not os.getenv("MLFLOW_TRACKING_URI"):
             raise SystemExit("MLFLOW_TRACKING_URI is not set - fill in .env first.")

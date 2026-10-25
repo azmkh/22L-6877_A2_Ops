@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
 
-# The assignment asks for "<RollNumber>_A2_Ops" everywhere: set PROJECT_NAME once in .env.
-PROJECT_NAME = os.getenv("PROJECT_NAME", "ROLLNO_A2_Ops")
+# The assignment asks for "<RollNumber>_A2_Ops" everywhere (roll number 22L-6877).
+PROJECT_NAME = os.getenv("PROJECT_NAME", "22L-6877_A2_Ops")
 REGISTERED_MODEL_NAME = os.getenv("REGISTERED_MODEL_NAME", f"{PROJECT_NAME}_visionguard")
 SEED = int(os.getenv("SEED", "42"))
 

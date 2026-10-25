@@ -1,6 +1,6 @@
-# VisionGuard - ROLLNO_A2_Ops
+# VisionGuard - 22L-6877_A2_Ops
 
-![CI](https://github.com/<you>/ROLLNO_A2_Ops/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/<you>/22L-6877_A2_Ops/actions/workflows/ci.yml/badge.svg)
 
 A web service that says whether an uploaded image is **AI-generated or real**: a TensorFlow/Keras model
 tracked with MLflow on DagsHub, served by Flask with a PostgreSQL prediction trail, packaged with Docker
@@ -8,9 +8,9 @@ Compose, and deployed as a cloud model API.
 
 | | |
 |---|---|
-| GitHub | https://github.com/&lt;you&gt;/ROLLNO_A2_Ops |
-| DagsHub (code, data, experiments) | https://dagshub.com/&lt;you&gt;/ROLLNO_A2_Ops |
-| Model API | https://&lt;hf-user&gt;-rollno-a2-ops.hf.space |
+| GitHub | https://github.com/&lt;you&gt;/22L-6877_A2_Ops |
+| DagsHub (code, data, experiments) | https://dagshub.com/&lt;you&gt;/22L-6877_A2_Ops |
+| Model API | https://&lt;hf-user&gt;-22l-6877-a2-ops.hf.space |
 
 ## Quick start
 
