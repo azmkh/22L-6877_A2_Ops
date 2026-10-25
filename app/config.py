@@ -12,7 +12,7 @@ def _float_or_none(name):
 def load_settings() -> dict:
     model_path = os.getenv("MODEL_PATH", "models/champion.keras")
     return {
-        "PROJECT_NAME": os.getenv("PROJECT_NAME", "ROLLNO_A2_Ops"),
+        "PROJECT_NAME": os.getenv("PROJECT_NAME", "22L-6877_A2_Ops"),
         "MODEL_PATH": model_path,
         "MODEL_META_PATH": os.getenv("MODEL_META_PATH") or None,
         "THRESHOLD": _float_or_none("THRESHOLD"),  # empty = use the threshold saved with the model

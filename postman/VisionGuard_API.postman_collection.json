@@ -5,7 +5,7 @@
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "https://<hf-user>-rollno-a2-ops.hf.space" },
+    { "key": "baseUrl", "value": "https://<hf-user>-22l-6877-a2-ops.hf.space" },
     { "key": "apiKey", "value": "<API_KEY>" }
   ],
   "item": [

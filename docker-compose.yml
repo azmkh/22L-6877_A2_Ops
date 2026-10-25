@@ -26,7 +26,7 @@ services:
     environment:
       # "db" resolves through Compose's internal DNS to the database container.
       DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-visionguard}
-      PROJECT_NAME: ${PROJECT_NAME:-ROLLNO_A2_Ops}
+      PROJECT_NAME: ${PROJECT_NAME:-22L-6877_A2_Ops}
       MODEL_PATH: /models/champion.keras
       THRESHOLD: ${THRESHOLD:-}
       MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-5}
