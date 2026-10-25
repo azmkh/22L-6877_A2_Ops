@@ -1,0 +1,21 @@
+{
+  "model_name": "exp9_mnv2_tuned",
+  "model_type": "transfer",
+  "backbone": "mobilenetv2",
+  "img_size": 224,
+  "threshold": 0.8384968042373657,
+  "threshold_strategy": "fpr_cap",
+  "max_fpr": 0.1,
+  "class_names": [
+    "real",
+    "ai"
+  ],
+  "positive_class": "ai",
+  "best_epoch": 29,
+  "run_id": "eb6e9c52a46a4971ae9d0a8c1953b632",
+  "git_commit": "3ff3137d95f03c3d1fb1c21f2ae0aedc1915f233",
+  "dvc_data_version": "b2cec67839f742df4653f66d4bcbbafb.dir",
+  "registered_model": "22L-6877_A2_Ops_visionguard",
+  "alias": "champion",
+  "model_version": 3
+}
