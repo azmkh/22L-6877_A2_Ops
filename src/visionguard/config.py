@@ -1,9 +1,16 @@
 """Shared settings for the training-side scripts. Everything can be overridden from .env."""
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+
+# On Windows, output redirected to a file/pipe defaults to cp1252, and MLflow prints an emoji
+# ("View run ...") when a run ends on a remote server, which crashed the script at the last step.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
