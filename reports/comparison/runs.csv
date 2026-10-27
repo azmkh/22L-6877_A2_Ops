@@ -1,6 +1,9 @@
 run,model,backbone,lr,img_size,augment,unfreeze_layers,tracking,final_val_roc_auc,final_val_f1,test_roc_auc,test_f1,test_precision,test_recall,test_fpr_real_called_ai,best_epoch,threshold
 exp6_mnv2_160px,transfer,mobilenetv2,0.001,160,True,None,manual,0.8811,0.7353,0.8509,0.7429,0.8814,0.642,0.1061,36.0,0.7959
+exp9_mnv2_tuned,transfer,mobilenetv2,0.001,224,True,40,manual,0.8722,0.7832,0.8801,0.8497,0.9028,0.8025,0.1061,31.0,0.7013
+exp7_effnetb0,transfer,efficientnetb0,0.001,224,True,None,manual,0.8579,0.7206,0.864,0.6875,0.9362,0.5432,0.0455,40.0,0.7355
 exp4_mnv2_noaug,transfer,mobilenetv2,0.001,224,False,None,manual,0.8253,0.687,0.8212,0.6613,0.9535,0.5062,0.0303,29.0,0.8266
+exp8_mnv2_autolog,transfer,mobilenetv2,0.001,224,True,None,autolog,0.8251,0.6615,0.8358,0.6167,0.9487,0.4568,0.0303,38.0,0.8463
 exp2_mnv2_reference,transfer,mobilenetv2,0.001,224,True,None,manual,0.8241,0.6615,0.8315,0.6167,0.9487,0.4568,0.0303,33.0,0.8487
 exp3_mnv2_lr1e-4,transfer,mobilenetv2,0.0001,224,True,None,manual,0.8182,0.6299,0.8305,0.6218,0.9737,0.4568,0.0152,38.0,0.8116
 exp1_baseline_cnn,baseline,none,0.001,224,True,None,manual,0.8165,0.608,0.7933,0.6519,0.8148,0.5432,0.1515,31.0,0.8073

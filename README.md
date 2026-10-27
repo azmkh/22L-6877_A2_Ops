@@ -10,7 +10,7 @@ Compose, and deployed as a cloud model API.
 |---|---|
 | GitHub | https://github.com/azmkh/22L-6877_A2_Ops |
 | DagsHub (code, data, experiments) | https://dagshub.com/azmkh/22L-6877_A2_Ops |
-| Model API | https://&lt;hf-user&gt;-22l-6877-a2-ops.hf.space |
+| Model API | https://azmkh7-22l-6877-a2-ops.hf.space ([Space](https://huggingface.co/spaces/azmkh7/22L-6877_A2_Ops)) |
 
 ## Quick start
 
