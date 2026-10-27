@@ -42,11 +42,26 @@ claim screenshots, cloud activity, or report content that is not present in the 
   `exp9` run. `reports/comparison/` now holds all nine conditions. `exp6_mnv2_160px` still has the
   best validation ROC-AUC (0.8811); `exp9_mnv2_tuned` (run `b9d0a86a…`) is close on ROC-AUC (0.8722)
   and best on validation F1 (0.7832).
-- **The registered champion is an older run.** `models/champion.json` (registry version 3, the model
-  in the Space) is the first `exp9_mnv2_tuned` run, `eb6e9c52…` (last-block fine-tuning; val ROC-AUC
-  0.8689, val F1 0.7111). It is weaker on validation than both `exp6` and the later `exp9` run
-  `b9d0a86a…` (unfreezes 40 layers, fine-tune lr 4.4e-5, dropout 0.4). Either register and promote a
-  better run, or the report must explain why version 3 stayed champion.
+- **Registry moved to DagsHub (resolved 2026-10-27).** Versions 1-3 had been registered only in the
+  local `mlruns` store; the DagsHub registry was empty, and the old champion (`eb6e9c52…`) was weaker
+  on validation than `exp6` and the later `exp9`. DagsHub now has `22L-6877_A2_Ops_visionguard`
+  version 1 = `exp6_mnv2_160px` (`be0d107a…`) and version 2 = `exp9_mnv2_tuned` (`b9d0a86a…`) with
+  alias `champion`. `registry export` wrote it to `models/` (the previous files are kept in
+  `models/previous_v3_local/`); `predict_champion.py`, `visionguard.serving` and the Flask routes
+  (health, two predictions, 415/422/413 rejections, history) were checked against it.
+- **Space has champion v2 but cannot run.** The model files were uploaded (Space commit `42ca021`),
+  but Hugging Face refuses to start the Space: the free CPU Basic quota for `azmkh7` is 0, and
+  ZeroGPU needs an account at least 30 days old (or PRO / a community grant). Until then there is no
+  public API URL for the Task 7 and 8 evidence.
+- **Local integration test (2026-10-28).** The Space's `app.py` was run locally with the Space's
+  requirements and model v2. `/health` reported v2, threshold 0.701. `/predict` classified a real and
+  an AI image correctly and returned 401 (no or wrong key), 415 (.txt) and 422 (undecodable image);
+  Bearer auth worked. Flask with `INFERENCE_MODE=remote` against it classified 2 real and 2 AI test
+  images correctly, logged all 4 History rows as `remote:127.0.0.1:7861`, rejected a .txt with 415,
+  and showed a 502 error page when the API was unreachable.
+- Keras Tuner toy run completed: best 128 units, lr 3.07e-4, val accuracy 0.834, test 0.836.
+- Docker is not installed on this machine, so the Task 6 build, size and Compose evidence must be
+  captured on a machine with Docker Desktop.
 
 ## Next actions
 
