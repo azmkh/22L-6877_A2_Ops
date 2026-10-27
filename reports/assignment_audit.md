@@ -31,6 +31,23 @@ claim screenshots, cloud activity, or report content that is not present in the 
 | 7-8 Cloud API and integration | `api/`, `deploy/prepare_hf_space.ps1`, `postman/VisionGuard_API.postman_collection.json`, remote inference support | Deployment and integration code exists. A live URL, public/other-network API check, Postman evidence, and remote-mode history screenshots are not verifiable from the checkout. |
 | 11 Report | No final report PDF in repo | **Incomplete deliverable:** prepare the named PDF with front matter, one chapter per task, explanations, captions, screenshots, links, graded commit, and AI-assistance disclosure. |
 
+## Findings from the 2026-10-27 re-check
+
+- **Live API is paused.** The Space `azmkh7/22L-6877_A2_Ops` (Gradio SDK) exists, but
+  `https://azmkh7-22l-6877-a2-ops.hf.space/health` answers "The space is paused". It must be
+  restarted from the Space settings before the Postman, other-network and Task 8 evidence can be
+  captured. Its published files also include `index.html` and `style.css`, which are not in
+  `deploy/hf_gradio_upload/`.
+- **Comparison regenerated.** The earlier table (17:11) predated `exp7`, `exp8` and the second
+  `exp9` run. `reports/comparison/` now holds all nine conditions. `exp6_mnv2_160px` still has the
+  best validation ROC-AUC (0.8811); `exp9_mnv2_tuned` (run `b9d0a86a…`) is close on ROC-AUC (0.8722)
+  and best on validation F1 (0.7832).
+- **The registered champion is an older run.** `models/champion.json` (registry version 3, the model
+  in the Space) is the first `exp9_mnv2_tuned` run, `eb6e9c52…` (last-block fine-tuning; val ROC-AUC
+  0.8689, val F1 0.7111). It is weaker on validation than both `exp6` and the later `exp9` run
+  `b9d0a86a…` (unfreezes 40 layers, fine-tune lr 4.4e-5, dropout 0.4). Either register and promote a
+  better run, or the report must explain why version 3 stayed champion.
+
 ## Next actions
 
 1. Verify the registry, app, Compose stack, and public API in their real connected environments and capture the assignment's evidence screenshots.
