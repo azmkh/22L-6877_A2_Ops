@@ -1,0 +1,4 @@
+[core]
+    remote = toyremote
+['remote "toyremote"']
+    url = C:\Users\hp\dvc_toy_A2_remote
