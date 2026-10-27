@@ -19,6 +19,8 @@ from visionguard import config, tracking  # noqa: E402
 PARAMS = ["model", "backbone", "lr", "img_size", "augment", "unfreeze_layers", "tracking"]
 METRICS = ["final_val_roc_auc", "final_val_f1", "test_roc_auc", "test_f1", "test_precision",
            "test_recall", "test_fpr_real_called_ai", "best_epoch", "threshold"]
+CONFIG_PARAMS = ["model", "backbone", "lr", "img_size", "batch_size", "augment",
+                 "unfreeze_layers", "fine_tune_lr", "dropout", "seed", "tracking"]
 
 
 def main(argv=None):
@@ -34,10 +36,19 @@ def main(argv=None):
     if runs.empty:
         raise SystemExit("No finished training runs found in the experiment.")
 
+    # Repeated executions of the same configuration are useful for reproducibility checks,
+    # but they are not distinct experiment conditions. Keep the newest completed run for
+    # each configuration so reruns cannot inflate the comparison count.
+    signature = [f"params.{name}" for name in CONFIG_PARAMS if f"params.{name}" in runs]
+    if signature:
+        runs = runs.sort_values("start_time").drop_duplicates(subset=signature, keep="last")
+
     cols = {"tags.mlflow.runName": "run"}
     cols.update({f"params.{p}": p for p in PARAMS if f"params.{p}" in runs})
     cols.update({f"metrics.{m}": m for m in METRICS if f"metrics.{m}" in runs})
     table = runs[list(cols)].rename(columns=cols).round(4)
+    if {"model", "backbone"}.issubset(table.columns):
+        table.loc[table["model"] == "baseline", "backbone"] = "none"
     table = table.sort_values("final_val_roc_auc", ascending=False)
 
     out = config.REPORTS / "comparison"

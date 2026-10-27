@@ -28,3 +28,11 @@ build/
 
 # build metadata from `pip install -e .`
 *.egg-info/
+
+# Hugging Face Gradio Space staging: only app.py, README.md and requirements.txt are source.
+# The model and the modules below are copies of models/ and src/visionguard/.
+deploy/hf_gradio/
+deploy/hf_gradio_upload/champion.*
+deploy/hf_gradio_upload/preprocess.py
+deploy/hf_gradio_upload/serving.py
+deploy/hf_gradio_upload/validation.py
