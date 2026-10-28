@@ -62,6 +62,12 @@ claim screenshots, cloud activity, or report content that is not present in the 
 - Keras Tuner toy run completed: best 128 units, lr 3.07e-4, val accuracy 0.834, test 0.836.
 - Docker is not installed on this machine, so the Task 6 build, size and Compose evidence must be
   captured on a machine with Docker Desktop.
+- **CI toy done (2026-10-28).** `labs/ci_toy/` was pushed to the public repository
+  https://github.com/azmkh/22L-6877_A2_Ops_ci_toy. Three pushes gave three runs: `7b50db3` passed on
+  Python 3.11 and 3.12; `43e5818` (`add()` changed to subtract) failed at `pytest -v` on 3.11, and the
+  3.12 job was cancelled by the matrix's fail-fast default; `9f9ed14` (fix) passed on both.
+- `.venv` reports Python 3.12.10, TensorFlow 2.19.0, Keras 3.10.0, no GPU.
+- The DVC toy used a local folder remote (`~/dvc_toy_A2_remote`), not DagsHub; push and pull worked.
 
 ## Next actions
 
