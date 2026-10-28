@@ -54,6 +54,7 @@ def test_confidence_is_relative_to_threshold(p, t, label, conf):
 @pytest.mark.parametrize("size", [(300, 200), (120, 260), (224, 224), (50, 40)])
 def test_numpy_resize_matches_tensorflow(size):
     """The TFLite API resizes with Pillow/NumPy; it must match the TensorFlow path used in training."""
+    pytest.importorskip("tensorflow")  # CI installs no TensorFlow; this runs locally
     import numpy as np
 
     from visionguard.preprocess import decode_and_resize, decode_and_resize_np
@@ -63,3 +64,15 @@ def test_numpy_resize_matches_tensorflow(size):
     b = decode_and_resize_np(jpeg, 224)
     assert b.shape == a.shape == (224, 224, 3)
     assert np.abs(a - b).mean() < 2.0
+
+
+def test_numpy_resize_keeps_aspect_ratio_and_pads_black():
+    import numpy as np
+
+    from visionguard.preprocess import decode_and_resize_np
+
+    out = decode_and_resize_np(canonical_jpeg(image_bytes("JPEG", (300, 200))), 224)
+    assert out.shape == (224, 224, 3) and out.dtype == np.float32
+    # 300x200 scales to 224x149: 37 black rows above and 38 below, image in between
+    assert out[:37].max() == 0 and out[-38:].max() == 0
+    assert out[37:186].min() > 0
