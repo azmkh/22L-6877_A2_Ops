@@ -4,7 +4,8 @@
     POST /predict                multipart field "image" (or the raw image as the body)
                                  header  X-API-Key: <API_KEY>   (or Authorization: Bearer <API_KEY>)
 
-The model file is built into the image and loaded once at start-up.
+The model file is built into the image and loaded once at start-up. MODEL_PATH ending in .tflite
+runs the TFLite export with LiteRT (deploy/render/Dockerfile); anything else runs Keras.
 """
 import hmac
 import logging
@@ -14,7 +15,7 @@ from flask import Flask, jsonify, request
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import secure_filename
 
-from visionguard.serving import LocalPredictor
+from visionguard.serving import load_predictor
 from visionguard.validation import ALLOWED_EXTENSIONS, InvalidImage, check_image_bytes, extension_of
 from visionguard.web import InMemoryRequest
 
@@ -36,7 +37,7 @@ def create_app(predictor=None):
         log.warning("API_KEY is not set - every /predict call will be refused")
     if predictor is None:
         threshold = os.getenv("THRESHOLD", "").strip()
-        predictor = LocalPredictor(os.getenv("MODEL_PATH", "models/champion.keras"),
+        predictor = load_predictor(os.getenv("MODEL_PATH", "models/champion.keras"),
                                    os.getenv("MODEL_META_PATH") or None,
                                    float(threshold) if threshold else None)
     log.info("Model %s v%s ready", predictor.model_name, predictor.model_version)
