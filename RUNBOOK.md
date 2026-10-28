@@ -272,7 +272,15 @@ git-lfs). Screenshot each step and the build log. The API URL looks like
 
 Research notes for the report: free CPU Space = 2 vCPU / 16 GB, sleeps after inactivity (first call is
 slow), public by default (hence the API key), no persistent disk (the database stays local).
-**Render** is an alternative: same `api/Dockerfile`, but the free 512 MB instance is tight for TensorFlow.
+**Render** (used when the Hugging Face account got no free CPU quota): the TensorFlow API peaks at
+about 555 MB, over Render's free 512 MB, so Render runs the TFLite export with LiteRT (about 85 MB).
+```powershell
+python scripts/export_tflite.py     # models/champion.tflite -> deploy/render/ (commit these two files)
+```
+Push to GitHub, then in Render: **New → Blueprint**, pick this repository (it reads `render.yaml`),
+enter the `API_KEY` value when asked, and deploy. The URL looks like `https://vg-22l-6877-a2-ops.onrender.com`.
+The free instance sleeps after 15 minutes idle; the first request after that takes about a minute.
+CI job `render-api` builds this image and smoke-tests `/health` and `/predict` on every push.
 
 **Postman:** import `postman\VisionGuard_API.postman_collection.json`, set `baseUrl` and `apiKey`, select an
 image in each predict request, run the collection. Screenshot responses + Test Results, and test once

@@ -1,0 +1,14 @@
+# Task 7 - Render Blueprint for the model API (free plan). In Render: New -> Blueprint -> this repo.
+# API_KEY is not stored here: Render asks for its value when the Blueprint is created.
+services:
+  - type: web
+    name: vg-22l-6877-a2-ops
+    runtime: docker
+    plan: free
+    dockerfilePath: ./deploy/render/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: API_KEY
+        sync: false

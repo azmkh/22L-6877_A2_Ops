@@ -14,6 +14,7 @@ __pycache__/
 data/clean/
 models/*.keras
 models/*.json
+models/*.tflite
 models/previous_*/
 
 # experiment outputs

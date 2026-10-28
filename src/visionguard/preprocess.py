@@ -51,3 +51,22 @@ def decode_and_resize(jpeg_bytes, img_size: int):
                             preserve_aspect_ratio=True, antialias=True)
     image = tf.image.resize_with_crop_or_pad(image, img_size, img_size)
     return tf.ensure_shape(image, (img_size, img_size, 3))
+
+
+def decode_and_resize_np(jpeg_bytes: bytes, img_size: int):
+    """NumPy/Pillow twin of decode_and_resize for the TFLite API, which has no TensorFlow.
+    Same steps: scale to fit (rounded like TF), antialiased bilinear in float, centre-pad with 0."""
+    import numpy as np
+
+    with Image.open(io.BytesIO(jpeg_bytes)) as img:
+        img = img.convert("RGB")
+        width, height = img.size
+        scale = min(img_size / height, img_size / width)
+        new_h, new_w = int(np.round(scale * height)), int(np.round(scale * width))
+        # resize each channel as a float ("F") image so no rounding to uint8 happens here
+        channels = [np.asarray(c.convert("F").resize((new_w, new_h), Image.BILINEAR)) for c in img.split()]
+    resized = np.stack(channels, axis=-1)
+    out = np.zeros((img_size, img_size, 3), dtype=np.float32)
+    top, left = (img_size - new_h) // 2, (img_size - new_w) // 2
+    out[top:top + new_h, left:left + new_w] = resized
+    return out

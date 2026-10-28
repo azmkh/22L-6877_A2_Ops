@@ -3,10 +3,13 @@
 *
 !requirements-serve.txt
 !requirements-api.txt
+!requirements-api-lite.txt
 !src/visionguard/*.py
 !app/
 !api/
 !wsgi.py
 !models/champion.keras
 !models/champion.json
+!deploy/render/champion.tflite
+!deploy/render/champion.json
 **/__pycache__

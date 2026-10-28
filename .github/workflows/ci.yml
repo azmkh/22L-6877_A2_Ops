@@ -39,3 +39,34 @@ jobs:
           tags: visionguard-web:ci
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  render-api:
+    # Task 7 - the Render image (TFLite + LiteRT): build it, start it, and check /health and /predict.
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build Render API image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/render/Dockerfile
+          load: true
+          tags: visionguard-api-lite:ci
+          cache-from: type=gha,scope=render
+          cache-to: type=gha,mode=max,scope=render
+      - name: Smoke test
+        run: |
+          docker run -d --name api -p 10000:10000 -e API_KEY=ci-test-key visionguard-api-lite:ci
+          for i in $(seq 1 30); do curl -sf localhost:10000/health && break; sleep 2; done
+          curl -sf localhost:10000/health | grep -q '"model_version":"2"'
+          python3 -c "from PIL import Image" 2>/dev/null || pip install -q pillow
+          python3 -c "from PIL import Image; Image.new('RGB', (300, 200), (90, 140, 200)).save('probe.png')"
+          test "$(curl -s -o /dev/null -w '%{http_code}' -F image=@probe.png localhost:10000/predict)" = 401
+          curl -sf -H "X-API-Key: ci-test-key" -F image=@probe.png localhost:10000/predict | tee result.json
+          grep -q '"label"' result.json
+          docker stats --no-stream api
+      - name: Container logs
+        if: always()
+        run: docker logs api

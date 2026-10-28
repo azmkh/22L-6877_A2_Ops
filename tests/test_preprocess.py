@@ -49,3 +49,17 @@ def test_confidence_is_relative_to_threshold(p, t, label, conf):
     got_label, got_conf = decide(p, t)
     assert got_label == label and got_conf == pytest.approx(conf, abs=1e-3)
     assert 0.5 <= got_conf <= 1.0
+
+
+@pytest.mark.parametrize("size", [(300, 200), (120, 260), (224, 224), (50, 40)])
+def test_numpy_resize_matches_tensorflow(size):
+    """The TFLite API resizes with Pillow/NumPy; it must match the TensorFlow path used in training."""
+    import numpy as np
+
+    from visionguard.preprocess import decode_and_resize, decode_and_resize_np
+
+    jpeg = canonical_jpeg(image_bytes("JPEG", size))
+    a = decode_and_resize(jpeg, 224).numpy()
+    b = decode_and_resize_np(jpeg, 224)
+    assert b.shape == a.shape == (224, 224, 3)
+    assert np.abs(a - b).mean() < 2.0
