@@ -1,4 +1,7 @@
 [core]
-    remote = toyremote
+    remote = dagshub
 ['remote "toyremote"']
     url = C:\Users\hp\dvc_toy_A2_remote
+['remote "dagshub"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/azmkh/22L-6877_A2_Ops.s3
