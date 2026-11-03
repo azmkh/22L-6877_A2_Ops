@@ -75,6 +75,15 @@ claim screenshots, cloud activity, or report content that is not present in the 
   correct (same as Keras); 401 no/wrong key, 200 Bearer, 415 `.txt`, 422 fake `.jpg`, 413 6 MB.
   Flask in remote mode against it logged 4 History rows as `remote:azmkh.pythonanywhere.com`.
   Still needed: Postman run and a call from another network (user), and screenshots.
+- **Postman (2026-11-03):** the collection run with newman against the live API passed 5 requests,
+  7 of 7 assertions (real → Real 98.1%, AI → AI 98.2%, no key 401, `.txt` 415).
+- **Task 6 run (2026-11-04)** with Docker Desktop 29.9.2 / Compose v5.6.1. 6.1 nginx warm-up done
+  (bind mount, logs, exec, named volume, cleanup). 6.4 sizes: `latest` 2.08 GB disk / 417 MB
+  compressed vs `naive` 4.21 GB / 1.13 GB; base 142 MB vs 1.19 GB, pip layer 1.52 vs 1.89 GB (338 MB
+  pip cache). 6.3: db and web healthy, predictions stored in Postgres and kept across `down`/`up`
+  (`visionguard_pgdata`); db port not published (a native Windows `postgres.exe` owns host 5432).
+  6.5: stop/start/restart/logs/exec shown; missing-model failure gave a logged ERROR, `/health` 503,
+  container `unhealthy`; restoring the file and restarting fixed it.
 
 ## Next actions
 
