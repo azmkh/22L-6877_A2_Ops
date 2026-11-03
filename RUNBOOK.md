@@ -281,6 +281,17 @@ Push to GitHub, then in Render: **New → Blueprint**, pick this repository (it 
 enter the `API_KEY` value when asked, and deploy. The URL looks like `https://vg-22l-6877-a2-ops.onrender.com`.
 The free instance sleeps after 15 minutes idle; the first request after that takes about a minute.
 CI job `render-api` builds this image and smoke-tests `/health` and `/predict` on every push.
+Render asked for a card, so the live API runs on **PythonAnywhere** (free, no card) with the same
+TFLite model: https://azmkh.pythonanywhere.com. In a PythonAnywhere Bash console:
+```bash
+git clone --depth 1 https://github.com/azmkh/22L-6877_A2_Ops.git ~/22L-6877_A2_Ops
+python3.11 -m venv ~/vg-venv
+~/vg-venv/bin/pip install -r ~/22L-6877_A2_Ops/requirements-api-lite.txt
+read -rs K && printf %s "$K" > ~/.visionguard_api_key && chmod 600 ~/.visionguard_api_key && unset K
+```
+Web tab: Add a new web app → Manual configuration → Python 3.11, virtualenv `/home/<user>/vg-venv`,
+replace the WSGI file with `deploy/pythonanywhere/wsgi.py`, Reload. To update after a push:
+`cd ~/22L-6877_A2_Ops && git pull`, then Reload.
 
 **Postman:** import `postman\VisionGuard_API.postman_collection.json`, set `baseUrl` and `apiKey`, select an
 image in each predict request, run the collection. Screenshot responses + Test Results, and test once

@@ -10,7 +10,7 @@ Compose, and deployed as a cloud model API.
 |---|---|
 | GitHub | https://github.com/azmkh/22L-6877_A2_Ops |
 | DagsHub (code, data, experiments) | https://dagshub.com/azmkh/22L-6877_A2_Ops |
-| Model API | https://azmkh7-22l-6877-a2-ops.hf.space ([Space](https://huggingface.co/spaces/azmkh7/22L-6877_A2_Ops)) |
+| Model API | https://azmkh.pythonanywhere.com (TFLite champion v2 on PythonAnywhere) |
 
 ## Quick start
 
@@ -27,7 +27,7 @@ Then open http://127.0.0.1:5000.
  browser ──> Flask web app (app/) ──> PostgreSQL  (prediction history)
                   │
                   ├─ INFERENCE_MODE=local : champion.keras loaded once at start-up
-                  └─ INFERENCE_MODE=remote: HTTPS + API key ──> model API (api/) on Hugging Face Spaces
+                  └─ INFERENCE_MODE=remote: HTTPS + API key ──> model API (api/) on PythonAnywhere
 
  training (src/visionguard) ──> MLflow on DagsHub ──> registry alias "champion" ──> models/champion.keras
  dataset ──> DVC ──> DagsHub storage
