@@ -68,6 +68,13 @@ claim screenshots, cloud activity, or report content that is not present in the 
   3.12 job was cancelled by the matrix's fail-fast default; `9f9ed14` (fix) passed on both.
 - `.venv` reports Python 3.12.10, TensorFlow 2.19.0, Keras 3.10.0, no GPU.
 - The DVC toy used a local folder remote (`~/dvc_toy_A2_remote`), not DagsHub; push and pull worked.
+- **Live API (2026-11-03): https://azmkh.pythonanywhere.com.** The TensorFlow API peaked at ~555 MB,
+  over Render's free 512 MB, so the champion was converted to TFLite and served with LiteRT (~83 MB;
+  0/147 label flips against Keras). Render then asked for a card, so the API runs on PythonAnywhere's
+  free plan (`deploy/pythonanywhere/wsgi.py`). Public checks: `/health` v2; 5 of 6 test images
+  correct (same as Keras); 401 no/wrong key, 200 Bearer, 415 `.txt`, 422 fake `.jpg`, 413 6 MB.
+  Flask in remote mode against it logged 4 History rows as `remote:azmkh.pythonanywhere.com`.
+  Still needed: Postman run and a call from another network (user), and screenshots.
 
 ## Next actions
 
