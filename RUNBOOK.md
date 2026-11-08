@@ -305,7 +305,7 @@ showing the same requests.
 
 ## Report checklist (11.1 / 11.2)
 - Front matter: name, roll number (22L-6877), GitHub / DagsHub / API URLs, graded commit hash (`git rev-parse HEAD`),
-  **disclosure of AI assistants used and for what** (this code was written with help from Claude).
+  **disclosure of AI assistants used and for what**.
 - One chapter per task; under each sub-task ID: what, why, how (in your own words), what went wrong.
 - Every screenshot captioned, referenced in the text, with username/time/project name visible.
 - File name `22L-6877_VisionGuard.pdf`.
