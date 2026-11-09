@@ -5,7 +5,7 @@ claim screenshots, cloud activity, or report content that is not present in the 
 
 ## Repository state
 
-- Git branch: `main`, at `3e8ec7c` (`Add DagsHub DVC remote; write UTF-8 output so remote MLflow runs finish`).
+- Git branch: `main`, at `210e4bb` (`Add DagsHub DVC remote; write UTF-8 output so remote MLflow runs finish`).
 - The working tree was clean before this audit. `reports/assignment_audit.md` is the audit deliverable.
 - The assignment PDF asks for a separately submitted, screenshot-supported `22L-6877_VisionGuard.pdf`.
   No such report is present in this repository.
@@ -64,8 +64,8 @@ claim screenshots, cloud activity, or report content that is not present in the 
   captured on a machine with Docker Desktop.
 - **CI toy done (2026-10-28).** `labs/ci_toy/` was pushed to the public repository
   https://github.com/azmkh/22L-6877_A2_Ops_ci_toy. Three pushes gave three runs: `7b50db3` passed on
-  Python 3.11 and 3.12; `43e5818` (`add()` changed to subtract) failed at `pytest -v` on 3.11, and the
-  3.12 job was cancelled by the matrix's fail-fast default; `9f9ed14` (fix) passed on both.
+  Python 3.11 and 3.12; `e29ef8c` (`add()` changed to subtract) failed at `pytest -v` on 3.11, and the
+  3.12 job was cancelled by the matrix's fail-fast default; `2c831dd` (fix) passed on both.
 - `.venv` reports Python 3.12.10, TensorFlow 2.19.0, Keras 3.10.0, no GPU.
 - The DVC toy first used a local folder remote (`~/dvc_toy_A2_remote`). **On DagsHub (2026-11-04):**
   its history is the branch `dvc-toy` of `azmkh/22L-6877_A2_Ops` (mirrored to DagsHub) and both data
